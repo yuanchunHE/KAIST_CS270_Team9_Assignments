@@ -3,6 +3,9 @@ public class Main {
         Api api = new Api();
         Explorer explorer = new Explorer(api);
 
-        explorer.run(0,0,0);
+        explorer.run(0, 0, 0);
+
+        System.out.println("This is result of explorer");
+        System.out.print(explorer.getResult());
     }
 }
