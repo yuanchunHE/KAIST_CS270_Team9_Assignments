@@ -15,7 +15,9 @@ public class GoForward extends Thread {
 	public void run() {
 		RegulatedMotor leftMotor = Motor.A;
 		RegulatedMotor rightMotor = Motor.B;
-
+		
+		System.out.println("GoForward Started!");
+		
 		leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
 
 		while (true) {
