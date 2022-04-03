@@ -1,11 +1,11 @@
-
+package pack;
 
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3IRSensor;
 import lejos.robotics.SampleProvider;
 
 public class BoxDetect extends Thread {
-	private final int maxDistance = 11;// distance sensor������
+	private final int maxDistance = 11;// distance sensorµÄÊý¾Ý
 	private DataFlow dataFlow;
 	private EV3IRSensor distanceSensor;
 
