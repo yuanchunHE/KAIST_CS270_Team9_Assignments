@@ -1,4 +1,4 @@
-package pack;
+
 
 public class CoordinateSys extends Coordinate {
 	String facingDirection;
