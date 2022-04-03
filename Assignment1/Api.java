@@ -1,15 +1,20 @@
 package pack;
 
 import lejos.hardware.motor.Motor;
+import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
 
 public class Api {
     private BoxDetectThread boxDetectThread;
+    private RedDetectThread redDetectThread;
 
     public Api() {
         boxDetectThread = new BoxDetectThread();
 		boxDetectThread.start();
+		
+		redDetectThread = new RedDetectThread();
+		redDetectThread.start();
     }
 
     public void goForward() {
@@ -70,4 +75,17 @@ public class Api {
         if (boxDetectThread.getDistance() < 11.0) return true;
         return false;
     }
+    public boolean isRed() {
+    	return redDetectThread.getColorID() == Color.RED;
+    }
+    public boolean isBlue() {
+    	return redDetectThread.getColorID() == Color.BLUE;
+    }
+    public boolean isYellow() {
+    	return redDetectThread.getColorID() == Color.YELLOW;
+    }
+    public boolean isBlack() {
+    	return redDetectThread.getColorID() == Color.BLACK;
+    }
+    
 }
