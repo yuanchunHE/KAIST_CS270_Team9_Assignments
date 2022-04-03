@@ -18,7 +18,7 @@ public class Robot {
 			}
 		}
 
-        System.out.println("This is result of explorer");
-        System.out.print(explorer.getResult());
+        System.out.println("Finish.");
+        //System.out.print(explorer.getResult());
 	}
 }
