@@ -5,7 +5,7 @@ import lejos.hardware.sensor.EV3IRSensor;
 import lejos.robotics.SampleProvider;
 
 public class BoxDetectThread extends Thread {
-	private final float maxDistance = 11.0;
+	private final float maxDistance = 11.0f;
 	private float distance = 0;
 	private EV3IRSensor distanceSensor;
 	
