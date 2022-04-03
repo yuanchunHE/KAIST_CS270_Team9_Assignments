@@ -6,6 +6,9 @@ import lejos.utility.Delay;
 
 public class MoveAPI {
 
+	private static final int dx[] = new int[]{ 0, 1, 0, -1 };
+    private static final int dy[] = new int[]{ 1, 0, -1, 0 };
+
 	public void goForward() {
 		RegulatedMotor leftMotor = Motor.A;
 		RegulatedMotor rightMotor = Motor.B;
@@ -55,7 +58,7 @@ public class MoveAPI {
 		rightMotor.backward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(1080);
+		Delay.msDelay(1150);
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -74,7 +77,7 @@ public class MoveAPI {
 		rightMotor.forward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(1080);
+		Delay.msDelay(1150);
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -89,24 +92,27 @@ public class MoveAPI {
 		
 		Coordinate frontPos=new Coordinate();
 		
-		switch (dataFlow.getRobotPos().facingDirection) {
-		case "+x":
-			frontPos.x = roboPos.x + 1;
-			frontPos.y = roboPos.y;
-			break;
-		case "-x":
-			frontPos.x = roboPos.x - 1;
-			frontPos.y = roboPos.y;
-			break;
-		case "+y":
-			frontPos.x = roboPos.x;
-			frontPos.y = roboPos.y + 1;
-			break;
-		case "-y":
-			frontPos.x = roboPos.x;
-			frontPos.y = roboPos.y - 1;
-			break;
-		}
+		frontPos.x=roboPos.x+dx[dataFlow.getRobotPos().facingDirection];
+		frontPos.y=roboPos.y+dy[dataFlow.getRobotPos().facingDirection];
+
+//		switch (dataFlow.getRobotPos().facingDirection) {
+//		case "+x":
+//			frontPos.x = roboPos.x + 1;
+//			frontPos.y = roboPos.y;
+//			break;
+//		case "-x":
+//			frontPos.x = roboPos.x - 1;
+//			frontPos.y = roboPos.y;
+//			break;
+//		case "+y":
+//			frontPos.x = roboPos.x;
+//			frontPos.y = roboPos.y + 1;
+//			break;
+//		case "-y":
+//			frontPos.x = roboPos.x;
+//			frontPos.y = roboPos.y - 1;
+//			break;
+//		}
 		
 		if(frontPos.equals(box1Pos)||frontPos.equals(box2Pos))
 			return true;
