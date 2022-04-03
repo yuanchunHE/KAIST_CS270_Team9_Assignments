@@ -1,4 +1,4 @@
-
+package pack;
 
 import lejos.hardware.BrickFinder;
 import lejos.hardware.Keys;
