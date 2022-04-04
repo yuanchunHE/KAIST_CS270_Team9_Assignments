@@ -7,16 +7,8 @@ public class Robot {
 		Api api = new Api();
 		Explorer explorer = new Explorer(api);
 
-		while (true) {
-			if (api.isBlue()) {
-		        explorer.run(0, 0, 0);
-		        break;
-			}
-			else if (api.isYellow()) {
-				explorer.run(5, 3, 2);
-				break;
-			}
-		}
+		int[] startPos = api.getStartPos();
+		explorer.run(startPos[0], startPos[1], startPos[2]);
 
         System.out.println("Finish.");
         //System.out.print(explorer.getResult());

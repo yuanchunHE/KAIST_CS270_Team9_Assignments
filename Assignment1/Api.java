@@ -18,7 +18,7 @@ class SimulationApi {
     private int box1X, box1Y;
     private int box2X, box2Y;
 
-    public Api() {
+    public SimulationApi() {
         posX = 0; posY = 0; posDir = 0;
         box1X = 0; box1Y = 1;
         box2X = 3; box2Y = 2;
@@ -55,6 +55,10 @@ class SimulationApi {
         }
     }
 
+    public int[] getStartPos() {
+        return new int[]{ posX, posY, posDir };
+    }
+
     public void goForward() {
         posX += dx[posDir];
         posY += dy[posDir];
@@ -84,10 +88,16 @@ class SimulationApi {
 }
 
 public class Api {
+    private static final boolean isSimulation = false;
+    private SimulationApi simulApi;
     private BoxDetectThread boxDetectThread;
     private RedDetectThread redDetectThread;
 
     public Api() {
+        if (isSimulation) {
+            simulApi = new SimulationApi();
+        }
+
         boxDetectThread = new BoxDetectThread();
 		boxDetectThread.start();
 		
@@ -95,7 +105,22 @@ public class Api {
 		redDetectThread.start();
     }
 
+    public int[] getStartPos() {
+        if (isSimulation) { return simulApi.getStartPos(); }
+
+        while (true) {
+            if (isBlue()) {
+                return new int[]{ 0, 0, 0 };
+            }
+            if (isYellow()) {
+                return new int[]{ 5, 3, 2 };
+            }
+        }
+    }
+
     public void goForward() {
+        if (isSimulation) { simulApi.goForward(); return; }
+
         RegulatedMotor leftMotor = Motor.A;
 		RegulatedMotor rightMotor = Motor.B;
 
@@ -114,6 +139,8 @@ public class Api {
 		leftMotor.endSynchronization();
     }
     public void turnLeft() {
+        if (isSimulation) { simulApi.turnLeft(); return; }
+
         RegulatedMotor leftMotor = Motor.A;
 		RegulatedMotor rightMotor = Motor.B;
 
@@ -132,6 +159,8 @@ public class Api {
 		leftMotor.endSynchronization();
     }
     public void turnRight() {
+        if (isSimulation) { simulApi.turnRight(); return; }
+
         RegulatedMotor leftMotor = Motor.A;
 		RegulatedMotor rightMotor = Motor.B;
 
@@ -150,6 +179,8 @@ public class Api {
 		leftMotor.endSynchronization();
     }
     public boolean isBlocked() {
+        if (isSimulation) { return simulApi.isBlocked(); }
+
         if (boxDetectThread.getDistance() < 11.0) return true;
         return false;
     }
