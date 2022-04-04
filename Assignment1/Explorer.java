@@ -1,3 +1,5 @@
+package pack;
+
 import java.util.Stack;
 
 public class Explorer {
@@ -13,7 +15,7 @@ public class Explorer {
     private int posX, posY, posDir;
     private int countDetectedBox;
 
-    /* Recorded map (0 = unconfirmed, 1 = empty. 2 = box) */
+    /* Recorded map (0 = unconfirmed, 1 = empty. 2 = box, 3 = red ) */
     private int map[][];
     
     /* Api */
