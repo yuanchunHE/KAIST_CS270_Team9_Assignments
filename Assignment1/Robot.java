@@ -6,7 +6,7 @@ public class Robot {
 		
 		Api api = new Api();
 		Explorer explorer = new Explorer(api);
-
+		
 		int[] startPos = api.getStartPos();
 		explorer.run(startPos[0], startPos[1], startPos[2]);
 

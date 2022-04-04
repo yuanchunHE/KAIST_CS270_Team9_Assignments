@@ -23,37 +23,10 @@ class SimulationApi {
         box1X = 0; box1Y = 1;
         box2X = 3; box2Y = 2;
 
-        printMap();
+        //printMap();
     }
 
-    private void printMap() {
-        System.out.println("┌───┬───┬───┬───┬───┬───┐");
-        for (int i=3; i>=0; i--){
-            for (int j=0; j<=5; j++){
-                System.out.print("│");
-                if (j == box1X && i == box1Y) System.out.print(" ■ ");
-                else if (j == box2X && i == box2Y) System.out.print(" ■ ");
-                else if (j == posX && i == posY) {
-                    if (posDir == 0) System.out.print(" △ ");
-                    else if(posDir == 1) System.out.print(" ▷ ");
-                    else if(posDir == 2) System.out.print(" ▽ ");
-                    else if(posDir == 3) System.out.print(" ◁ ");
-                }
-                else System.out.print("   ");
-            }
-            System.out.println("│");
-            if (i!=0) {
-                System.out.println("├───┼───┼───┼───┼───┼───┤");
-            }
-        }
-        System.out.println("└───┴───┴───┴───┴───┴───┘");
-
-        try {
-            Thread.sleep(300);
-        } catch(InterruptedException e) {
-            System.out.println("Error on sleep");
-        }
-    }
+    
 
     public int[] getStartPos() {
         return new int[]{ posX, posY, posDir };
@@ -63,19 +36,19 @@ class SimulationApi {
         posX += dx[posDir];
         posY += dy[posDir];
 
-        printMap();
+        //printMap();
     }
     public void turnLeft() {
         posDir -= 1;
         if (posDir < 0) posDir = 3;
 
-        printMap();
+        //printMap();
     }
     public void turnRight() {
         posDir += 1;
         if (posDir >= 4) posDir = 0;
 
-        printMap();
+        //printMap();
     }
     public boolean isBlocked() {
         int tx = posX + dx[posDir];
@@ -131,8 +104,15 @@ public class Api {
 		rightMotor.backward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(3000);
-
+		//System.out.println(Motor.A.getMaxSpeed());//800-780
+		Delay.msDelay(3200);//3300 < 4 cell 
+		/*
+		leftMotor.setSpeed((int)Motor.A.getMaxSpeed());
+		rightMotor.setSpeed((int)Motor.B.getMaxSpeed());
+		
+		leftMotor.rotate(4*360);
+		rightMotor.rotate(4*360);
+		*/
 		leftMotor.startSynchronization();
 		leftMotor.stop();
 		rightMotor.stop();
@@ -151,7 +131,7 @@ public class Api {
 		rightMotor.backward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(3450);
+		Delay.msDelay(1600);
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -171,7 +151,7 @@ public class Api {
 		rightMotor.forward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(3450);
+		Delay.msDelay(1600);
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -179,9 +159,9 @@ public class Api {
 		leftMotor.endSynchronization();
     }
     public boolean isBlocked() {
-        if (isSimulation) { return simulApi.isBlocked(); }
+        //if (isSimulation) { return simulApi.isBlocked(); }
 
-        if (boxDetectThread.getDistance() < 11.0) return true;
+        if (boxDetectThread.getDistance() < 20.0f) return true;
         return false;
     }
     public boolean isRed() {

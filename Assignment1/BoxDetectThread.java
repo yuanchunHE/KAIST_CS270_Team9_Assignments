@@ -24,6 +24,7 @@ public class BoxDetectThread extends Thread {
 		while (!flag) {
 			distanceMode.fetchSample(value, 0);
 			distance = value[0]; // centimeter
+			System.out.println(distance);
 		}
 	}
 
