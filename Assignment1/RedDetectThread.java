@@ -10,6 +10,7 @@ public class RedDetectThread extends Thread {
 	private EV3ColorSensor rightColorSensor;
 	private boolean flag;
 	private int frontColor;
+	//private boolean 
 	
 	RedDetectThread() {
 		flag = false;

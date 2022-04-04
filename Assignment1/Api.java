@@ -106,7 +106,7 @@ public class Api {
 		rightMotor.backward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(1000);
+		Delay.msDelay(3000);
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -124,7 +124,7 @@ public class Api {
 		rightMotor.backward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(1150);
+		Delay.msDelay(3450);
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -142,7 +142,7 @@ public class Api {
 		rightMotor.forward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(1150);
+		Delay.msDelay(3450);
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();

@@ -13,7 +13,7 @@ public class Explorer {
     
     /* Robot's current location */
     private int posX, posY, posDir;
-    private int countDetectedBox;
+    private int countDetectedBox, countDetectedRed;
 
     /* Recorded map (0 = unconfirmed, 1 = empty. 2 = box, 3 = red ) */
     private int map[][];
@@ -128,9 +128,15 @@ public class Explorer {
     /* DFS */
     private void dfs(int x, int y) {
         map[x][y] = 1;
+        
+        if (api.isRed()) {
+        	map[x][y] = 3;
+        	countDetectedRed += 1;
+        	System.out.println("(" + x + "," + y + "," + "R)");
+        }
 
         while (true) {
-            if (countDetectedBox >= 2) break;
+            if (countDetectedBox >= 2 && countDetectedRed >= 2) break;
 
             boolean keepDfs = false;
 
@@ -167,6 +173,7 @@ public class Explorer {
                         if (api.isBlocked()) {
                             map[tx][ty] = 2;
                             countDetectedBox += 1;
+                            System.out.println("(" + tx + "," + ty + "," + "B)");
                         }
                         else {
                             dfs(tx, ty);
@@ -183,6 +190,7 @@ public class Explorer {
         posX = x; posY = y; posDir = dir;
         map = new int[maxMapSizeX + 1][maxMapSizeY + 1];
         countDetectedBox = 0;
+        countDetectedRed = 0;
         
         // dfs
         dfs(x, y);
@@ -203,6 +211,9 @@ public class Explorer {
             for (int y = 0; y <= maxMapSizeY; y++) {
                 if (map[x][y] == 2) {
                     str = str + "(" + x + "," + y + "," + "B)\n";
+                }
+                else if (map[x][y] == 3) {
+                    str = str + "(" + x + "," + y + "," + "R)\n";
                 }
             }
         }
