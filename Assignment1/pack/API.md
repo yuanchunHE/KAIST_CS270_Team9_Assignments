@@ -1,5 +1,7 @@
 # API
 
+## getStartPos
+
 ## goForward
 Move one block forward
 
@@ -13,3 +15,5 @@ rotate 90 degrees counterclockwise
 Check that a block is located in front of the robot
 - If located, return true
 - If not, return false
+
+## isRed
