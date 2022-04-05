@@ -207,7 +207,7 @@ public class Explorer {
         }
     }
 
-    public void run(int x, int y, int dir) {
+    public boolean run(int x, int y, int dir) {
         // initialization
         posX = x; posY = y; posDir = dir;
         mapBox = new int[maxMapSizeX + 1][maxMapSizeY + 1];
@@ -220,6 +220,7 @@ public class Explorer {
 
         // end
         moveDirect(x, y);
+        return true;
     }
 
     private void printPos(int x, int y, String z) {
