@@ -15,8 +15,9 @@ public class Explorer {
     private int posX, posY, posDir;
     private int countDetectedBox, countDetectedRed;
 
-    /* Recorded map (0 = unconfirmed, 1 = empty. 2 = box, 3 = red ) */
-    private int map[][];
+    /* Recorded map */
+    private int mapBox[][]; // (0 = unconfirmed , 1 = empty , 2 = box )
+    private int mapRed[][]; // (0 = unconfirmed , 1 = white , 2 = red )
     
     /* Api */
     private Api api;
@@ -31,11 +32,14 @@ public class Explorer {
         int dp[][][] = new int[maxMapSizeX + 1][maxMapSizeY + 1][4];
         int path[][][] = new int[maxMapSizeX + 1][maxMapSizeY + 1][4];
         boolean check[][][] = new boolean[maxMapSizeX + 1][maxMapSizeY + 1][4];
-        
+
         for (int i = 0; i <= maxMapSizeX; i++) {
             for (int j = 0; j <= maxMapSizeY; j++) {
                 for(int k = 0; k < 4; k++) {
                     dp[i][j][k] = INF;
+                }
+                if (countDetectedBox >= 2 && mapBox[i][j] == 0) {
+                    mapBox[i][j] = 1;
                 }
             }
         }
@@ -77,7 +81,7 @@ public class Explorer {
             tx = tmpX + dx[tmpDir];
             ty = tmpY + dy[tmpDir];
             if (0 <= tx && tx <= maxMapSizeX && 0 <= ty && ty <= maxMapSizeY) {
-                if (map[tx][ty] == 1 && dp[tx][ty][tdir] > minCost) {
+                if (mapBox[tx][ty] == 1 && dp[tx][ty][tdir] > minCost) {
                     dp[tx][ty][tdir] = minCost;
                     path[tx][ty][tdir] = 0;
                 }
@@ -127,12 +131,16 @@ public class Explorer {
 
     /* DFS */
     private void dfs(int x, int y) {
-        map[x][y] = 1;
-        
-        if (api.isRed()) {
-        	map[x][y] = 3;
-        	countDetectedRed += 1;
-        	System.out.println("(" + x + "," + y + "," + "R)");
+        if (countDetectedRed < 2 && mapRed[x][y] == 0) {
+            moveDirect(x, y);
+            if (api.isRed()) {
+                mapRed[x][y] = 2;
+                countDetectedRed += 1;
+                printPos(x, y, "R");
+            }
+            else {
+                mapRed[x][y] = 1;
+            }
         }
 
         while (true) {
@@ -144,14 +152,16 @@ public class Explorer {
                 int tx = x + dx[i];
                 int ty = y + dy[i];
                 if (0 <= tx && tx <= maxMapSizeX && 0 <= ty && ty <= maxMapSizeY) {
-                    if (map[tx][ty] == 0) {
+                    if (countDetectedBox < 2 && mapBox[tx][ty] == 0) {
+                        keepDfs = true;
+                    }
+                    if (countDetectedRed < 2 && mapRed[tx][ty] == 0) {
                         keepDfs = true;
                     }
                 }
             }
 
             if (!keepDfs) break;
-            moveDirect(x, y);
 
             int ddir[] = new int[]{ 0, 1, 3, 2 };
             for (int i = 0; i < 4; i++) {
@@ -160,7 +170,8 @@ public class Explorer {
                 int ty = y + dy[tdir];
                 
                 if (0 <= tx && tx <= maxMapSizeX && 0 <= ty && ty <= maxMapSizeY) {
-                    if (map[tx][ty] == 0) {
+                    if (countDetectedBox < 2 && mapBox[tx][ty] == 0) {
+                        moveDirect(x, y);
                         if (ddir[i] == 1) {
                             api.turnRight();
                             posDir = (posDir + 1) % 4;
@@ -169,15 +180,26 @@ public class Explorer {
                             api.turnLeft();
                             posDir = (posDir + 3) % 4;
                         }
+                        else if (ddir[i] == 4) {
+                            api.turnRight();
+                            api.turnRight();
+                            posDir = (posDir + 2) % 4;
+                        }
 
                         if (api.isBlocked()) {
-                            map[tx][ty] = 2;
+                            mapBox[tx][ty] = 2;
+                            mapRed[tx][ty] = 1;
                             countDetectedBox += 1;
-                            System.out.println("(" + tx + "," + ty + "," + "B)");
+                            printPos(tx, ty, "B");
                         }
                         else {
+                            mapBox[tx][ty] = 1;
                             dfs(tx, ty);
                         }
+                        break;
+                    }
+                    if (countDetectedRed < 2 && mapRed[tx][ty] == 0) {
+                        dfs(tx, ty);
                         break;
                     }
                 }
@@ -188,20 +210,20 @@ public class Explorer {
     public void run(int x, int y, int dir) {
         // initialization
         posX = x; posY = y; posDir = dir;
-        map = new int[maxMapSizeX + 1][maxMapSizeY + 1];
+        mapBox = new int[maxMapSizeX + 1][maxMapSizeY + 1];
+        mapRed = new int[maxMapSizeX + 1][maxMapSizeY + 1];
         countDetectedBox = 0;
         countDetectedRed = 0;
         
         // dfs
         dfs(x, y);
-        System.out.println(map[2][1]);
 
-        for (int i = 0; i <= maxMapSizeX; i++) {
-            for (int j = 0; j <= maxMapSizeY; j++) {
-                if (map[i][j] == 0) map[i][j] = 1;
-            }
-        }
-        moveDirect(0, 0);
+        // end
+        moveDirect(x, y);
+    }
+
+    private void printPos(int x, int y, String z) {
+        System.out.println("(" + x + "," + y + "," + z + ")");
     }
 
     public String getResult() {
@@ -209,10 +231,10 @@ public class Explorer {
         
         for (int x = 0; x <= maxMapSizeX; x++) {
             for (int y = 0; y <= maxMapSizeY; y++) {
-                if (map[x][y] == 2) {
+                if (mapBox[x][y] == 2) {
                     str = str + "(" + x + "," + y + "," + "B)\n";
                 }
-                else if (map[x][y] == 3) {
+                if (mapRed[x][y] == 2) {
                     str = str + "(" + x + "," + y + "," + "R)\n";
                 }
             }
