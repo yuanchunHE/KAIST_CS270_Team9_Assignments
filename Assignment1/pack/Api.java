@@ -23,6 +23,11 @@ public class Api {
 		redDetectThread = new RedDetectThread();
 		redDetectThread.start();
 	}
+	
+	public void stopAllThread() {
+		boxDetectThread.Stop();
+		redDetectThread.Stop();
+	}
 
 	public int[] getStartPos() {
 		if (isSimulation) {
@@ -56,16 +61,18 @@ public class Api {
 		leftMotor.rotate(-360 * 3, true); rightMotor.rotate(-360 * 3, true);
 
 		boolean checkLeft = false, checkRight = false;
-		long leftTime, rightTime;
+		long leftTime = 0, rightTime = 0;
 
 		while (checkLeft == false || checkRight == false) {
 			if (checkLeft == false && redDetectThread.getLeftColor() == Color.BLACK) {
 				leftTime = System.currentTimeMillis();
 				checkLeft = true;
+				System.out.println("LeftDetected");
 			}
 			if (checkRight == false && redDetectThread.getRightColor() == Color.BLACK) {
 				rightTime = System.currentTimeMillis();
 				checkRight = true;
+				System.out.println("RightDetected");
 			}
 		}
 		System.out.println(leftTime - rightTime);
@@ -74,8 +81,16 @@ public class Api {
 		leftMotor.stop(); rightMotor.stop();
 		leftMotor.endSynchronization();
 
+		int turnAngle = 360 * (int)(leftTime - rightTime) / 500;
+		Delay.msDelay(550);
 		leftMotor.startSynchronization();
-		leftMotor.rotate(-360 * 1); rightMotor.rotate(-360 * 1); // !
+		leftMotor.rotate(-turnAngle);
+		rightMotor.rotate(turnAngle);
+		leftMotor.endSynchronization();
+		
+		Delay.msDelay(550);
+		leftMotor.startSynchronization();
+		leftMotor.rotate(-360 * 1); rightMotor.rotate(-360 * 1);
 		leftMotor.endSynchronization();
 	}
 
