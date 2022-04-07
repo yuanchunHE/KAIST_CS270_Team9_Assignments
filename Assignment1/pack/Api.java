@@ -122,6 +122,7 @@ public class Api {
 
 		leftMotor.endSynchronization();
 
+		Delay.msDelay(3500);
 		// RegulatedMotor leftMotor = Motor.A;
 		// RegulatedMotor rightMotor = Motor.B;
 		//
@@ -185,6 +186,8 @@ public class Api {
 		leftMotor.rotate(570);
 		rightMotor.rotate(-570);
 		leftMotor.endSynchronization();
+
+		Delay.msDelay(4000);
 	}
 
 	public void turnRight() {
@@ -221,6 +224,8 @@ public class Api {
 		leftMotor.rotate(-590);
 		rightMotor.rotate(590);
 		leftMotor.endSynchronization();
+
+		Delay.msDelay(4000);
 	}
 
 	public boolean isBlocked() {
