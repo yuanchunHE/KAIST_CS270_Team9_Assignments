@@ -4,6 +4,7 @@ import lejos.hardware.motor.Motor;
 import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
+import java.util.Date;
 
 public class Api {
 	private static final boolean isSimulation = false;
@@ -54,9 +55,20 @@ public class Api {
 
 		leftMotor.rotate(-360 * 3, true); rightMotor.rotate(-360 * 3, true);
 
-		while (true) {
-			if (redDetectThread.getLeftColor() == Color.BLACK) break;
+		boolean checkLeft = false, checkRight = false;
+		long leftTime, rightTime;
+
+		while (checkLeft == false || checkRight == false) {
+			if (checkLeft == false && redDetectThread.getLeftColor() == Color.BLACK) {
+				leftTime = System.currentTimeMillis();
+				checkLeft = true;
+			}
+			if (checkRight == false && redDetectThread.getRightColor() == Color.BLACK) {
+				rightTime = System.currentTimeMillis();
+				checkRight = true;
+			}
 		}
+		System.out.println(leftTime - rightTime);
 
 		leftMotor.startSynchronization();
 		leftMotor.stop(); rightMotor.stop();
