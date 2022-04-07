@@ -5,30 +5,38 @@ import lejos.hardware.sensor.EV3IRSensor;
 import lejos.robotics.SampleProvider;
 
 public class BoxDetectThread extends Thread {
-	private float distance = 0;
-	private EV3IRSensor distanceSensor;
+	private float distanceLeft = 0;
+	private float distanceRight = 0;
+	private EV3IRSensor distanceSensorLeft;
+	private EV3IRSensor distanceSensorRight;
 	private boolean flag;
 	
 	BoxDetectThread() {
 		flag = false;
-		distanceSensor = new EV3IRSensor(SensorPort.S2);
+		distanceSensorLeft = new EV3IRSensor(SensorPort.S2);
+		distanceSensorRight = new EV3IRSensor(SensorPort.S4);
 	}
 
 	public void Stop(){
 		flag = true;
 	}
 	public void run() {
-		SampleProvider distanceMode = distanceSensor.getDistanceMode();
-		float value[] = new float[distanceMode.sampleSize()];
+		SampleProvider distanceModeLeft = distanceSensorLeft.getDistanceMode();
+		float valueLeft[] = new float[distanceModeLeft.sampleSize()];
+		
+		SampleProvider distanceModeRight = distanceSensorRight.getDistanceMode();
+		float valueRight[] = new float[distanceModeRight.sampleSize()];
 		
 		while (!flag) {
-			distanceMode.fetchSample(value, 0);
-			distance = value[0]; // centimeter
-			//System.out.println(distance);
+			distanceModeLeft.fetchSample(valueLeft, 0);
+			distanceLeft = valueLeft[0]; // centimeter
+			
+			distanceModeRight.fetchSample(valueRight, 0);
+			distanceRight = valueRight[0]; // centimeter
 		}
 	}
 
 	public float getDistance() {
-		return distance;
+		return Math.min(distanceLeft, distanceRight);
 	}
 }

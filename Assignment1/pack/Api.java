@@ -122,7 +122,10 @@ public class Api {
 
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(3500);
+		//Delay.msDelay(3500);
+		leftMotor.waitComplete();
+		rightMotor.waitComplete();
+		
 		// RegulatedMotor leftMotor = Motor.A;
 		// RegulatedMotor rightMotor = Motor.B;
 		//
@@ -182,12 +185,17 @@ public class Api {
 		rightMotor.stop();
 		leftMotor.endSynchronization();
 
+		leftMotor.waitComplete();
+		rightMotor.waitComplete();
+
 		leftMotor.startSynchronization();
-		leftMotor.rotate(570);
-		rightMotor.rotate(-570);
+		leftMotor.rotate(580);
+		rightMotor.rotate(-580);
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(4000);
+		leftMotor.waitComplete();
+		rightMotor.waitComplete();
+		//Delay.msDelay(4000);
 	}
 
 	public void turnRight() {
@@ -220,12 +228,19 @@ public class Api {
 		rightMotor.stop();
 		leftMotor.endSynchronization();
 
+		leftMotor.waitComplete();
+		rightMotor.waitComplete();
+
 		leftMotor.startSynchronization();
-		leftMotor.rotate(-590);
-		rightMotor.rotate(590);
+		leftMotor.rotate(-580);
+		rightMotor.rotate(580);
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(4000);
+		leftMotor.waitComplete();
+		rightMotor.waitComplete();
+		//Delay.msDelay(4000);
+		//leftMotor.waitComplete();
+		//rightMotor.waitComplete();
 	}
 
 	public boolean isBlocked() {
