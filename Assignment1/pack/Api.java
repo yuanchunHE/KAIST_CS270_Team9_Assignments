@@ -38,6 +38,35 @@ public class Api {
 		}
 	}
 
+	public void goForward2() {
+		RegulatedMotor leftMotor = Motor.A;
+		RegulatedMotor rightMotor = Motor.B;
+
+		leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
+
+		leftMotor.startSynchronization();
+		leftMotor.setSpeed(750); rightMotor.setSpeed(750);
+		leftMotor.endSynchronization();
+
+		leftMotor.startSynchronization();
+		leftMotor.setAcceleration(600); rightMotor.setAcceleration(600);
+		leftMotor.endSynchronization();
+
+		leftMotor.rotate(-360 * 3, true); rightMotor.rotate(-360 * 3, true);
+
+		while (true) {
+			if (redDetectThread.getLeftColor() == Color.BLACK) break;
+		}
+
+		leftMotor.startSynchronization();
+		leftMotor.stop(); rightMotor.stop();
+		leftMotor.endSynchronization();
+
+		leftMotor.startSynchronization();
+		leftMotor.rotate(-360 * 1); rightMotor.rotate(-360 * 1); // !
+		leftMotor.endSynchronization();
+	}
+
 	public void goForward() {
 		if (isSimulation) {
 			simulApi.goForward();
@@ -194,10 +223,7 @@ public class Api {
 		return redDetectThread.getColorID() == Color.YELLOW;
 	}
 
-	public boolean isBlack() {
-		return redDetectThread.getColorID() == Color.BLACK;
-	}
-
+	/*
 	public int correctDirection() {
 		// return 0:no need, 1:towards left, 2:towards right
 		if (redDetectThread.getLeftColor() == Color.BLACK
@@ -209,6 +235,7 @@ public class Api {
 		else
 			return 0;
 	}
+	*/
 }
 
 class SimulationApi {
