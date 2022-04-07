@@ -23,7 +23,7 @@ public class Api {
 		redDetectThread = new RedDetectThread();
 		redDetectThread.start();
 	}
-	
+
 	public void stopAllThread() {
 		boxDetectThread.Stop();
 		redDetectThread.Stop();
@@ -44,56 +44,44 @@ public class Api {
 		}
 	}
 
-	public void goForward2() {
-		RegulatedMotor leftMotor = Motor.A;
-		RegulatedMotor rightMotor = Motor.B;
-
-		leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
-
-		leftMotor.startSynchronization();
-		leftMotor.setSpeed(750); rightMotor.setSpeed(750);
-		leftMotor.endSynchronization();
-
-		leftMotor.startSynchronization();
-		leftMotor.setAcceleration(600); rightMotor.setAcceleration(600);
-		leftMotor.endSynchronization();
-
-		leftMotor.rotate(-360 * 3, true); rightMotor.rotate(-360 * 3, true);
-
-		boolean checkLeft = false, checkRight = false;
-		long leftTime = 0, rightTime = 0;
-
-		while (checkLeft == false || checkRight == false) {
-			if (checkLeft == false && redDetectThread.getLeftColor() == Color.BLACK) {
-				leftTime = System.currentTimeMillis();
-				checkLeft = true;
-				System.out.println("LeftDetected");
-			}
-			if (checkRight == false && redDetectThread.getRightColor() == Color.BLACK) {
-				rightTime = System.currentTimeMillis();
-				checkRight = true;
-				System.out.println("RightDetected");
-			}
-		}
-		System.out.println(leftTime - rightTime);
-
-		leftMotor.startSynchronization();
-		leftMotor.stop(); rightMotor.stop();
-		leftMotor.endSynchronization();
-
-		int turnAngle = 360 * (int)(leftTime - rightTime) / 500;
-		Delay.msDelay(550);
-		leftMotor.startSynchronization();
-		leftMotor.rotate(-turnAngle);
-		rightMotor.rotate(turnAngle);
-		leftMotor.endSynchronization();
-		
-		Delay.msDelay(550);
-		leftMotor.startSynchronization();
-		leftMotor.rotate(-360 * 1); rightMotor.rotate(-360 * 1);
-		leftMotor.endSynchronization();
-	}
-
+	/*
+	 * public void goForward2() { RegulatedMotor leftMotor = Motor.A;
+	 * RegulatedMotor rightMotor = Motor.B;
+	 * 
+	 * leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
+	 * 
+	 * leftMotor.startSynchronization(); leftMotor.setSpeed(750);
+	 * rightMotor.setSpeed(750); leftMotor.endSynchronization();
+	 * 
+	 * leftMotor.startSynchronization(); leftMotor.setAcceleration(600);
+	 * rightMotor.setAcceleration(600); leftMotor.endSynchronization();
+	 * 
+	 * leftMotor.rotate(-360 * 3, true); rightMotor.rotate(-360 * 3, true);
+	 * 
+	 * boolean checkLeft = false, checkRight = false; long leftTime = 0,
+	 * rightTime = 0;
+	 * 
+	 * while (checkLeft == false || checkRight == false) { if (checkLeft ==
+	 * false && redDetectThread.getLeftColor() == Color.BLACK) { leftTime =
+	 * System.currentTimeMillis(); checkLeft = true;
+	 * System.out.println("LeftDetected"); } if (checkRight == false &&
+	 * redDetectThread.getRightColor() == Color.BLACK) { rightTime =
+	 * System.currentTimeMillis(); checkRight = true;
+	 * System.out.println("RightDetected"); } } System.out.println(leftTime -
+	 * rightTime);
+	 * 
+	 * leftMotor.startSynchronization(); leftMotor.stop(); rightMotor.stop();
+	 * leftMotor.endSynchronization();
+	 * 
+	 * int turnAngle = 360 * (int)(leftTime - rightTime) / 500;
+	 * Delay.msDelay(550); leftMotor.startSynchronization();
+	 * leftMotor.rotate(-turnAngle); rightMotor.rotate(turnAngle);
+	 * leftMotor.endSynchronization();
+	 * 
+	 * Delay.msDelay(550); leftMotor.startSynchronization();
+	 * leftMotor.rotate(-360 * 1); rightMotor.rotate(-360 * 1);
+	 * leftMotor.endSynchronization(); }
+	 */
 	public void goForward() {
 		if (isSimulation) {
 			simulApi.goForward();
@@ -122,10 +110,10 @@ public class Api {
 
 		leftMotor.endSynchronization();
 
-		//Delay.msDelay(3500);
+		// Delay.msDelay(3500);
 		leftMotor.waitComplete();
 		rightMotor.waitComplete();
-		
+
 		// RegulatedMotor leftMotor = Motor.A;
 		// RegulatedMotor rightMotor = Motor.B;
 		//
@@ -195,7 +183,7 @@ public class Api {
 
 		leftMotor.waitComplete();
 		rightMotor.waitComplete();
-		//Delay.msDelay(4000);
+		// Delay.msDelay(4000);
 	}
 
 	public void turnRight() {
@@ -238,9 +226,9 @@ public class Api {
 
 		leftMotor.waitComplete();
 		rightMotor.waitComplete();
-		//Delay.msDelay(4000);
-		//leftMotor.waitComplete();
-		//rightMotor.waitComplete();
+		// Delay.msDelay(4000);
+		// leftMotor.waitComplete();
+		// rightMotor.waitComplete();
 	}
 
 	public boolean isBlocked() {
@@ -271,18 +259,13 @@ public class Api {
 	}
 
 	/*
-	public int correctDirection() {
-		// return 0:no need, 1:towards left, 2:towards right
-		if (redDetectThread.getLeftColor() == Color.BLACK
-				&& redDetectThread.getRightColor() != Color.BLACK)
-			return 1;
-		else if (redDetectThread.getLeftColor() != Color.BLACK
-				&& redDetectThread.getRightColor() == Color.BLACK)
-			return 2;
-		else
-			return 0;
-	}
-	*/
+	 * public int correctDirection() { // return 0:no need, 1:towards left,
+	 * 2:towards right if (redDetectThread.getLeftColor() == Color.BLACK &&
+	 * redDetectThread.getRightColor() != Color.BLACK) return 1; else if
+	 * (redDetectThread.getLeftColor() != Color.BLACK &&
+	 * redDetectThread.getRightColor() == Color.BLACK) return 2; else return 0;
+	 * }
+	 */
 }
 
 class SimulationApi {
@@ -318,8 +301,9 @@ class SimulationApi {
 
 	private void printMap() {
 		/*
-		 * System.out.println("鈹屸攢鈹�鈹�鈹攢鈹�鈹�鈹攢鈹�鈹�鈹攢鈹�鈹�鈹攢鈹�鈹�鈹攢鈹�鈹�鈹�");
-		 * for (int i=3; i>=0; i--){ for (int j=0; j<=5; j++){
+		 * System.out.println(
+		 * "鈹屸攢鈹�鈹�鈹攢鈹�鈹�鈹攢鈹�鈹�鈹攢鈹�鈹�鈹攢鈹�鈹�鈹攢鈹�鈹�鈹�"
+		 * ); for (int i=3; i>=0; i--){ for (int j=0; j<=5; j++){
 		 * System.out.print("鈹�"); if (j == posX && i == posY) { if (posDir ==
 		 * 0) System.out.print(" 鈻� "); else if(posDir == 1)
 		 * System.out.print(" 鈻� "); else if(posDir == 2)
@@ -329,9 +313,11 @@ class SimulationApi {
 		 * System.out.print(" 鈻� "); else if (j == red1X && i == red1Y)
 		 * System.out.print(" 鈾� "); else if (j == red2X && i == red2Y)
 		 * System.out.print(" 鈾� "); else System.out.print("   "); }
-		 * System.out.println("鈹�"); if (i!=0) {
-		 * System.out.println("鈹溾攢鈹�鈹�鈹尖攢鈹�鈹�鈹尖攢鈹�鈹�鈹尖攢鈹�鈹�鈹尖攢鈹�鈹�鈹尖攢鈹�鈹�鈹�"); }
-		 * } System.out.println("鈹斺攢鈹�鈹�鈹粹攢鈹�鈹�鈹粹攢鈹�鈹�鈹粹攢鈹�鈹�鈹粹攢鈹�鈹�鈹粹攢鈹�鈹�鈹�");
+		 * System.out.println("鈹�"); if (i!=0) { System.out.println(
+		 * "鈹溾攢鈹�鈹�鈹尖攢鈹�鈹�鈹尖攢鈹�鈹�鈹尖攢鈹�鈹�鈹尖攢鈹�鈹�鈹尖攢鈹�鈹�鈹�"
+		 * ); } } System.out.println(
+		 * "鈹斺攢鈹�鈹�鈹粹攢鈹�鈹�鈹粹攢鈹�鈹�鈹粹攢鈹�鈹�鈹粹攢鈹�鈹�鈹粹攢鈹�鈹�鈹�"
+		 * );
 		 * 
 		 * try { Thread.sleep(300); } catch(InterruptedException e) {
 		 * System.out.println("Error on sleep"); }
