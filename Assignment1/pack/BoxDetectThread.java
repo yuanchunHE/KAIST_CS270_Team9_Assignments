@@ -37,6 +37,7 @@ public class BoxDetectThread extends Thread {
 	}
 
 	public float getDistance() {
+		//System.out.println(Math.min(distanceLeft, distanceRight));
 		return Math.min(distanceLeft, distanceRight);
 	}
 }

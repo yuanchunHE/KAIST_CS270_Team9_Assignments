@@ -21,8 +21,8 @@ public class Robot {
 		// System.out.print(explorer.getResult());
 		// Delay.msDelay(10000);
 
+		api.stopAllThread();
 		keys.waitForAnyPress();
-		while (keys.getButtons() == Keys.ID_ESCAPE)
-			api.stopAllThread();
+		//while (keys.getButtons() == Keys.ID_ESCAPE)
 	}
 }

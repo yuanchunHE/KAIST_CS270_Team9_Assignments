@@ -94,7 +94,7 @@ public class Api {
 
 		leftMotor.startSynchronization();
 		leftMotor.setSpeed(750);// 750
-		rightMotor.setSpeed(750);
+		rightMotor.setSpeed(780);//750
 		leftMotor.endSynchronization();
 
 		leftMotor.startSynchronization();
@@ -104,9 +104,9 @@ public class Api {
 
 		// leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
 		leftMotor.startSynchronization();
-		leftMotor.rotate(-360 * 3);// left:+-570,580 //360 -> 8cm //270->6cm
-									// //135->3cm //right:-+590
-		rightMotor.rotate(-360 * 3);
+		leftMotor.rotate(-1125);// left:+-570,580 //360 -> 8cm //270->6cm
+								// //135->3cm //right:-+590 //1125->25cm
+		rightMotor.rotate(-1125);
 
 		leftMotor.endSynchronization();
 
@@ -166,7 +166,7 @@ public class Api {
 		rightMotor.backward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(550);
+		Delay.msDelay(600);//550
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -177,12 +177,28 @@ public class Api {
 		rightMotor.waitComplete();
 
 		leftMotor.startSynchronization();
-		leftMotor.rotate(580);
-		rightMotor.rotate(-580);
+		leftMotor.rotate(570);
+		rightMotor.rotate(-570);
 		leftMotor.endSynchronization();
 
 		leftMotor.waitComplete();
 		rightMotor.waitComplete();
+		
+		leftMotor.startSynchronization();
+		leftMotor.forward();
+		rightMotor.forward();
+		leftMotor.endSynchronization();
+
+		Delay.msDelay(650);//550 650> 
+
+		leftMotor.startSynchronization();
+		leftMotor.stop();
+		rightMotor.stop();
+		leftMotor.endSynchronization();
+		
+		leftMotor.waitComplete();
+		rightMotor.waitComplete();
+		
 		// Delay.msDelay(4000);
 	}
 
@@ -209,7 +225,7 @@ public class Api {
 		rightMotor.backward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(550);
+		Delay.msDelay(600);//550
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -220,10 +236,25 @@ public class Api {
 		rightMotor.waitComplete();
 
 		leftMotor.startSynchronization();
-		leftMotor.rotate(-580);
-		rightMotor.rotate(580);
+		leftMotor.rotate(-570);
+		rightMotor.rotate(570);
 		leftMotor.endSynchronization();
 
+		leftMotor.waitComplete();
+		rightMotor.waitComplete();
+		
+		leftMotor.startSynchronization();
+		leftMotor.forward();
+		rightMotor.forward();
+		leftMotor.endSynchronization();
+
+		Delay.msDelay(650);
+
+		leftMotor.startSynchronization();
+		leftMotor.stop();
+		rightMotor.stop();
+		leftMotor.endSynchronization();
+		
 		leftMotor.waitComplete();
 		rightMotor.waitComplete();
 		// Delay.msDelay(4000);
@@ -236,7 +267,7 @@ public class Api {
 			return simulApi.isBlocked();
 		}
 
-		if (boxDetectThread.getDistance() < 20.0f) {
+		if (boxDetectThread.getDistance() < 30.0f) {//20
 			// System.out.println("Blocked!");
 			return true;
 		}

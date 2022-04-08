@@ -18,7 +18,7 @@ public class RedDetectThread extends Thread {
 
 	RedDetectThread() {
 		flag = false;
-		leftColorSensor = new EV3ColorSensor(SensorPort.S1);
+		leftColorSensor = new EV3ColorSensor(SensorPort.S3);
 		// rightColorSensor = new EV3ColorSensor(SensorPort.S3);
 		frontColor = 0;
 		// leftColor = 0;
