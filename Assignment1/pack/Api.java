@@ -177,8 +177,8 @@ public class Api {
 		rightMotor.waitComplete();
 
 		leftMotor.startSynchronization();
-		leftMotor.rotate(570);
-		rightMotor.rotate(-570);
+		leftMotor.rotate(565);
+		rightMotor.rotate(-565);
 		leftMotor.endSynchronization();
 
 		leftMotor.waitComplete();
@@ -236,8 +236,8 @@ public class Api {
 		rightMotor.waitComplete();
 
 		leftMotor.startSynchronization();
-		leftMotor.rotate(-570);
-		rightMotor.rotate(570);
+		leftMotor.rotate(-565);
+		rightMotor.rotate(565);
 		leftMotor.endSynchronization();
 
 		leftMotor.waitComplete();

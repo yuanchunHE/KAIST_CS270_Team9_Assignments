@@ -10,6 +10,7 @@ public class RedDetectThread extends Thread {
 	// private EV3ColorSensor rightColorSensor;
 	private boolean flag;
 	private int frontColor;
+	private int[] colorIdList = new int[]{ Color.RED, Color.WHITE, Color.BLUE, Color.YELLOW };
 
 	// private int leftColor;
 	// private int rightColor;
@@ -31,7 +32,13 @@ public class RedDetectThread extends Thread {
 
 	public void run() {
 		while (!flag) {
-			frontColor = leftColorSensor.getColorID();
+			int colorId = leftColorSensor.getColorID();
+			
+			for (int i : colorIdList) {
+				if (i == colorId) {
+					frontColor = colorId;
+				}
+			}
 			/*
 			 * leftColor = leftColorSensor.getColorID(); rightColor =
 			 * rightColorSensor.getColorID(); if (leftColor == Color.RED &&

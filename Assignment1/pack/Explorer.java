@@ -1,6 +1,7 @@
 package pack;
 
 import java.util.Stack;
+import lejos.hardware.Sound;
 
 public class Explorer {
     /* Maximum map size */
@@ -136,6 +137,7 @@ public class Explorer {
             if (api.isRed()) {
                 mapRed[x][y] = 2;
                 countDetectedRed += 1;
+                Sound.beep();
                 printPos(x, y, "R");
             }
             else {
@@ -190,6 +192,7 @@ public class Explorer {
                             mapBox[tx][ty] = 2;
                             mapRed[tx][ty] = 1;
                             countDetectedBox += 1;
+                            Sound.twoBeeps();
                             printPos(tx, ty, "B");
                         }
                         else {
