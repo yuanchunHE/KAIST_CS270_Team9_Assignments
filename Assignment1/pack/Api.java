@@ -82,19 +82,19 @@ public class Api {
 	 * leftMotor.rotate(-360 * 1); rightMotor.rotate(-360 * 1);
 	 * leftMotor.endSynchronization(); }
 	 */
-	public void goForward() {
+	public void goForward(int prevAction) {
 		if (isSimulation) {
 			simulApi.goForward();
 			return;
 		}
-		RegulatedMotor leftMotor = Motor.A;
-		RegulatedMotor rightMotor = Motor.B;
+		RegulatedMotor leftMotor = Motor.B;
+		RegulatedMotor rightMotor = Motor.C;
 
 		leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
 
 		leftMotor.startSynchronization();
 		leftMotor.setSpeed(750);// 750
-		rightMotor.setSpeed(780);//750
+		rightMotor.setSpeed(750);// 750
 		leftMotor.endSynchronization();
 
 		leftMotor.startSynchronization();
@@ -104,9 +104,15 @@ public class Api {
 
 		// leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
 		leftMotor.startSynchronization();
-		leftMotor.rotate(-1125);// left:+-570,580 //360 -> 8cm //270->6cm
-								// //135->3cm //right:-+590 //1125->25cm
-		rightMotor.rotate(-1125);
+		if (prevAction == 0) {
+			leftMotor.rotate(-1125);// left:+-570,580 //360 -> 8cm //270->6cm
+									// //135->3cm //right:-+590 //1125->25cm
+			rightMotor.rotate(-1125);
+		} else {
+			leftMotor.rotate(-1000);// left:+-570,580 //360 -> 8cm //270->6cm
+									// //135->3cm //right:-+590 //1125->25cm
+			rightMotor.rotate(-1000);
+		}
 
 		leftMotor.endSynchronization();
 
@@ -143,17 +149,31 @@ public class Api {
 		 */
 	}
 
-	public void turnLeft() {
+	public void turnLeft(int prevAction) {
 		if (isSimulation) {
 			simulApi.turnLeft();
 			return;
 		}
 
-		RegulatedMotor leftMotor = Motor.A;
-		RegulatedMotor rightMotor = Motor.B;
+		RegulatedMotor leftMotor = Motor.B;
+		RegulatedMotor rightMotor = Motor.C;
 
 		leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
 
+		// leftMotor.setSpeed(750);
+		// rightMotor.setSpeed(750);
+		//
+		// leftMotor.setAcceleration(600);
+		// rightMotor.setAcceleration(600);
+		//
+		// leftMotor.startSynchronization();
+		// leftMotor.rotate(565);
+		// rightMotor.rotate(-565);
+		// leftMotor.endSynchronization();
+		//
+		// leftMotor.waitComplete();
+		// rightMotor.waitComplete();
+		//
 		// time1600
 		leftMotor.setSpeed(750);
 		rightMotor.setSpeed(750);
@@ -166,7 +186,7 @@ public class Api {
 		rightMotor.backward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(600);//550
+		Delay.msDelay(600);// 550
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -177,43 +197,59 @@ public class Api {
 		rightMotor.waitComplete();
 
 		leftMotor.startSynchronization();
-		leftMotor.rotate(565);
-		rightMotor.rotate(-565);
+		leftMotor.rotate(575);//
+		rightMotor.rotate(-575);
 		leftMotor.endSynchronization();
 
 		leftMotor.waitComplete();
 		rightMotor.waitComplete();
-		
-		leftMotor.startSynchronization();
-		leftMotor.forward();
-		rightMotor.forward();
-		leftMotor.endSynchronization();
 
-		Delay.msDelay(650);//550 650> 
+		//if (prevAction != 0) {
+			leftMotor.startSynchronization();
+			leftMotor.forward();
+			rightMotor.forward();
+			leftMotor.endSynchronization();
 
-		leftMotor.startSynchronization();
-		leftMotor.stop();
-		rightMotor.stop();
-		leftMotor.endSynchronization();
-		
-		leftMotor.waitComplete();
-		rightMotor.waitComplete();
-		
+			Delay.msDelay(650);// 550 650>
+
+			leftMotor.startSynchronization();
+			leftMotor.stop();
+			rightMotor.stop();
+			leftMotor.endSynchronization();
+
+			leftMotor.waitComplete();
+			rightMotor.waitComplete();
+		//}
+
 		// Delay.msDelay(4000);
 	}
 
-	public void turnRight() {
+	public void turnRight(int prevAction) {
 		if (isSimulation) {
 			simulApi.turnRight();
 			return;
 		}
 
-		RegulatedMotor leftMotor = Motor.A;
-		RegulatedMotor rightMotor = Motor.B;
+		RegulatedMotor leftMotor = Motor.B;
+		RegulatedMotor rightMotor = Motor.C;
 
 		leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
 
-		// time1600
+		// leftMotor.setSpeed(750);
+		// rightMotor.setSpeed(750);
+		//
+		// leftMotor.setAcceleration(600);
+		// rightMotor.setAcceleration(600);
+		//
+		// leftMotor.startSynchronization();
+		// leftMotor.rotate(-565);
+		// rightMotor.rotate(565);
+		// leftMotor.endSynchronization();
+		//
+		// leftMotor.waitComplete();
+		// rightMotor.waitComplete();
+
+		// time16000
 		leftMotor.setSpeed(750);
 		rightMotor.setSpeed(750);
 
@@ -225,7 +261,7 @@ public class Api {
 		rightMotor.backward();
 		leftMotor.endSynchronization();
 
-		Delay.msDelay(600);//550
+		Delay.msDelay(600);// 550
 
 		leftMotor.startSynchronization();
 		leftMotor.stop();
@@ -236,27 +272,30 @@ public class Api {
 		rightMotor.waitComplete();
 
 		leftMotor.startSynchronization();
-		leftMotor.rotate(-565);
-		rightMotor.rotate(565);
+		leftMotor.rotate(-575);
+		rightMotor.rotate(575);
 		leftMotor.endSynchronization();
 
 		leftMotor.waitComplete();
 		rightMotor.waitComplete();
-		
-		leftMotor.startSynchronization();
-		leftMotor.forward();
-		rightMotor.forward();
-		leftMotor.endSynchronization();
 
-		Delay.msDelay(650);
+		//if (prevAction != 0) {
+			leftMotor.startSynchronization();
+			leftMotor.forward();
+			rightMotor.forward();
+			leftMotor.endSynchronization();
 
-		leftMotor.startSynchronization();
-		leftMotor.stop();
-		rightMotor.stop();
-		leftMotor.endSynchronization();
-		
-		leftMotor.waitComplete();
-		rightMotor.waitComplete();
+			Delay.msDelay(650);
+
+			leftMotor.startSynchronization();
+			leftMotor.stop();
+			rightMotor.stop();
+			leftMotor.endSynchronization();
+
+			leftMotor.waitComplete();
+			rightMotor.waitComplete();
+		//}
+
 		// Delay.msDelay(4000);
 		// leftMotor.waitComplete();
 		// rightMotor.waitComplete();
@@ -267,7 +306,7 @@ public class Api {
 			return simulApi.isBlocked();
 		}
 
-		if (boxDetectThread.getDistance() < 30.0f) {//20
+		if (boxDetectThread.getDistance() < 35.f) {// 50  //45  
 			// System.out.println("Blocked!");
 			return true;
 		}

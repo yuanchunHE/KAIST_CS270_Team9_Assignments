@@ -15,7 +15,7 @@ public class Robot {
 
 		int[] startPos = api.getStartPos();
 		explorer.run(startPos[0], startPos[1], startPos[2]);
-		// api.goForward2();
+		// api.goForward2(); 
 
 		System.out.println("Finish.");
 		// System.out.print(explorer.getResult());
