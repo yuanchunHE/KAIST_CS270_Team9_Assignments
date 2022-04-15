@@ -104,15 +104,15 @@ public class Api {
 
 		// leftMotor.synchronizeWith(new RegulatedMotor[] { rightMotor });
 		leftMotor.startSynchronization();
-		if (prevAction == 0) {
+		//if (prevAction == 0) {
 			leftMotor.rotate(-1125);// left:+-570,580 //360 -> 8cm //270->6cm
 									// //135->3cm //right:-+590 //1125->25cm
 			rightMotor.rotate(-1125);
-		} else {
-			leftMotor.rotate(-1000);// left:+-570,580 //360 -> 8cm //270->6cm
+		//} else {
+		//	leftMotor.rotate(-1000);// left:+-570,580 //360 -> 8cm //270->6cm
 									// //135->3cm //right:-+590 //1125->25cm
-			rightMotor.rotate(-1000);
-		}
+		//	rightMotor.rotate(-1000);
+		//}
 
 		leftMotor.endSynchronization();
 
@@ -197,8 +197,8 @@ public class Api {
 		rightMotor.waitComplete();
 
 		leftMotor.startSynchronization();
-		leftMotor.rotate(575);//
-		rightMotor.rotate(-575);
+		leftMotor.rotate(576);//
+		rightMotor.rotate(-576);
 		leftMotor.endSynchronization();
 
 		leftMotor.waitComplete();
@@ -272,8 +272,8 @@ public class Api {
 		rightMotor.waitComplete();
 
 		leftMotor.startSynchronization();
-		leftMotor.rotate(-575);
-		rightMotor.rotate(575);
+		leftMotor.rotate(-587);
+		rightMotor.rotate(587);
 		leftMotor.endSynchronization();
 
 		leftMotor.waitComplete();

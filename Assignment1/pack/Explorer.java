@@ -220,7 +220,7 @@ public class Explorer {
         mapRed = new int[maxMapSizeX + 1][maxMapSizeY + 1];
         countDetectedBox = 0;
         countDetectedRed = 0;
-        mapBox[0][0] = 1;
+        mapBox[x][y] = 1;
         
         // dfs
         dfs(x, y);
