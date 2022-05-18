@@ -1,10 +1,11 @@
 from camera import Camera
+from fruitDetect import FruitDetect
 
 def run():
     camera = Camera()
-    img = camera.capture()
-    img.save('test.png')
+    detector = FruitDetect()
+    # img = camera.capture()
+    # img.save('test.png')
 
 if __name__ == "__main__":
     run()
-    
