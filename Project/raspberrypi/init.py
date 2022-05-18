@@ -2,7 +2,9 @@ from camera import Camera
 
 def run():
     camera = Camera()
-    camera.capture()
+    img = camera.capture()
+    img.save('test.png')
 
 if __name__ == "__main__":
     run()
+    
