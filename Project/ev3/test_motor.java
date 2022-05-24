@@ -3,52 +3,43 @@ package test;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.Keys;
 import lejos.hardware.ev3.EV3;
-import lejos.hardware.lcd.TextLCD;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
-//import lejos.hardware.BrickFinder;
-//import lejos.hardware.Keys;
-//import lejos.hardware.ev3.EV3;
-//import lejos.hardware.lcd.TextLCD;
-//import lejos.hardware.sensor.EV3IRSensor;
-//import lejos.hardware.port.SensorPort;
-//import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
-import lejos.robotics.navigation.DifferentialPilot;
 
 public class test_motor {
 	// private static EV3IRSensor sensor;
-	private static EV3TouchSensor touch;
+	private static TestTouch touchSensor;
+
 	public static void main(String[] args) {
 		// startSynchronization();
 		EV3 ev3 = (EV3) BrickFinder.getLocal();
 		// TextLCD lcd = ev3.getTextLCD();
 		Keys keys = ev3.getKeys();
 
-		//testHand();
-		//for (int i = 0; i < 5; i++) {
-		//	testDistributer();
-		//	testFlipor();
-		//}
-	}
-	public static boolean testTouch() {
-		touch =new EV3TouchSensor(SensorPort.S1);
-		final SampleProvider sp = touch.getTouchMode();
-		int touchValue = 0;//0: not press  //1£ºpressed\
+		touchSensor = new TestTouch();
+		touchSensor.start();
 		
-        float [] sample = new float[sp.sampleSize()];
-        sp.fetchSample(sample, 0);
-        touchValue = (int)sample[0];
-        
-        if(touchValue == 1){
-        	return true;
-        }else{
-        	return false;
-        }
+		do {
+			if (touchSensor.getTouchValue() == 1) {
+				System.out.println("touched");
+			} else {
+				System.out.println("not touched");
+			}
+			keys.waitForAnyPress();
+		} while (keys.getButtons() != Keys.ID_ESCAPE);
+		
+		touchSensor.Stop();
+		// testHand();
+		// for (int i = 0; i < 5; i++) {
+		// testDistributer();
+		// testFlipor();
+		// }
 	}
+
 	public static void testHand() {
 		RegulatedMotor motor = Motor.A;
 
