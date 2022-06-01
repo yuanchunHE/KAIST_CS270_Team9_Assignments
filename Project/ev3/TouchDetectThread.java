@@ -1,28 +1,19 @@
-package test;
+package pack;
 
-import lejos.hardware.BrickFinder;
-import lejos.hardware.Keys;
-import lejos.hardware.ev3.EV3;
-import lejos.hardware.lcd.TextLCD;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.robotics.SampleProvider;
-import lejos.utility.Delay;
-import lejos.hardware.BrickFinder;
-import lejos.hardware.Keys;
-import lejos.hardware.ev3.EV3;
-import lejos.hardware.lcd.TextLCD;
+//import lejos.hardware.Keys;
 
-public class TestTouch extends Thread {
-
-	private EV3TouchSensor touch;
+public class TouchDetectThread extends Thread {
+	private EV3TouchSensor touchSensor;
 	private boolean flag;
-	private int touchValue;
+	private boolean touchValue;
 
-	TestTouch() {
-		touch = new EV3TouchSensor(SensorPort.S1);
+	TouchDetectThread() {
 		flag = false;
-		touchValue = 0;
+		touchSensor = new EV3TouchSensor(SensorPort.S1);
+		touchValue = false;
 	}
 
 	public void Stop() {
@@ -30,24 +21,21 @@ public class TestTouch extends Thread {
 	}
 
 	public void run() {
-
 		final SampleProvider sp = touch.getTouchMode();
 		while (!flag) {
-
 			float[] sample = new float[sp.sampleSize()];
 			sp.fetchSample(sample, 0);
 			touchValue = (int) sample[0];
 
 			// System.out.println("Iteration: {}" + i);
 			// System.out.println("Touch: {}" + touchValue);
-
 			// keys.waitForAnyPress();
 			// lcd.clear();
 		}
 
 	}
 
-	public int getTouchValue() {
+	public boolean isTouched() {
 		return touchValue;
 	}
 }
