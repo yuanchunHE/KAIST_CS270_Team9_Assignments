@@ -1,0 +1,26 @@
+<annotation>
+	<folder>resized_dataset</folder>
+	<filename>20220531_111304.jpg</filename>
+	<path>C:\windows_v1.6.0\resized_dataset\20220531_111304.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>720</width>
+		<height>540</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>banana2</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>263</xmin>
+			<ymin>236</ymin>
+			<xmax>449</xmax>
+			<ymax>333</ymax>
+		</bndbox>
+	</object>
+</annotation>

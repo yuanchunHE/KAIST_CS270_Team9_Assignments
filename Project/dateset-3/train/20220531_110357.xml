@@ -1,0 +1,26 @@
+<annotation verified="yes">
+	<folder>resized_dataset</folder>
+	<filename>20220531_110357.jpg</filename>
+	<path>C:\windows_v1.6.0\resized_dataset\20220531_110357.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>720</width>
+		<height>540</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>plum3</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>486</xmin>
+			<ymin>259</ymin>
+			<xmax>636</xmax>
+			<ymax>401</ymax>
+		</bndbox>
+	</object>
+</annotation>
