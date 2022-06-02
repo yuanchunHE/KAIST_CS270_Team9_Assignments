@@ -20,8 +20,8 @@ public class Robot {
 
         while (round <= maxRound) {
             if (fruitDetectThread.areThereFiveFruit()) {
-                api.ringTheBell();
-                // check who win
+                boolean success = api.ringTheBell();
+                // check who win -> success=True means robot first
                 round += 1;
                 // winner first ?
 
