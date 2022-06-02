@@ -18,9 +18,8 @@ public class Api {
         RegulatedMotor motor = Motor.D;
 	    motor.setSpeed((int) motor.getMaxSpeed());
         
-        int i, max_i = 30;
-        for (i = 0; i < max_i; i++) {
-            Delay.msDelay(10);
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - startTime < 300) {
             if (touchDetectThread.isTouched()) {
                 return true;
             }

@@ -10,6 +10,7 @@ public class Robot {
 
 	public static void main(String[] args) {
         Api api = new Api();
+
         FruitDetectThread fruitDetectThread = new FruitDetectThread();
         fruitDetectThread.start();
 
@@ -49,6 +50,7 @@ public class Robot {
         }
 
         // stop all thread
+        api.stopAllThread();
         fruitDetectThread.Stop();
 	}
 }
