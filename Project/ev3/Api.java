@@ -29,6 +29,23 @@ public class Api {
 
     public void flipOneCard() {
         // flip one card
+
+        // step1: distribute one card
+        RegulatedMotor motorA = Motor.A;
+        motorA.setSpeed((int) motorA.getMaxSpeed() / 2);
+        motorA.rotate(-190 * 2);
+        motorA.flt();
+        Delay.msDelay(100);
+        motorA.rotate(90);
+
+        // step2: flip one card
+        RegulatedMotor motorB = Motor.B;
+        motorB.setSpeed((int) motorB.getMaxSpeed() / 2);
+        motorB.rotate(-135);
+        motorB.flt();
+        Delay.msDelay(100);
+        motorB.rotate(135);
+        motorB.flt();
     }
 
     public void stopAllThread() {
