@@ -30,9 +30,9 @@ public class SocketWrap extends Thread {
 
     SocketWrap() throws UnknownHostException, IOException {
         flag = false;
-		socket = new Socket(serverAddress, serverPort);
-		streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-		streamOut = new DataOutputStream(socket.getOutputStream());
+        socket = new Socket(serverAddress, serverPort);
+        streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+        streamOut = new DataOutputStream(socket.getOutputStream());
     }
 
 	public void Stop() throws IOException {
@@ -81,7 +81,7 @@ public class FruitDetectThread extends Thread {
 
     public boolean areThereFiveFruit() {
         if (status == "") return false;
-        
+
         return Character.compare(status.charAt(0), '5') == 0 ||
             Character.compare(status.charAt(1), '5') == 0 ||
             Character.compare(status.charAt(2), '5') == 0 ||
