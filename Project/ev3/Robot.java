@@ -11,7 +11,7 @@ public class Robot {
 	public static void main(String[] args) {
         Api api = new Api();
         FruitDetectThread fruitDetectThread = new FruitDetectThread();
-        TouchDetectThread touchDetectThread = new TouchDetectThread();
+        fruitDetectThread.start();
 
         int round = 1;
         boolean isRobotTurn = true;
@@ -50,6 +50,5 @@ public class Robot {
 
         // stop all thread
         fruitDetectThread.Stop();
-        touchDetectThread.Stop();
 	}
 }
