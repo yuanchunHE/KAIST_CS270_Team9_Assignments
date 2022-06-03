@@ -17,66 +17,36 @@ import lejos.hardware.Keys;
 import lejos.hardware.ev3.EV3;
 import lejos.hardware.lcd.TextLCD;
 
-public class SocketWrap extends Thread {
-	private String serverAddress = "10.0.1.12";
-	private int serverPort = 8042;
-	private boolean flag;
-	
-	private Socket socket = null;
-	private DataOutputStream streamOut = null;
-	private DataInputStream streamIn = null;
-	
-	private String recvM = "";
 
-    SocketWrap() throws UnknownHostException, IOException {
-        flag = false;
-        socket = new Socket(serverAddress, serverPort);
-        streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-        streamOut = new DataOutputStream(socket.getOutputStream());
-    }
-
-	public void Stop() throws IOException {
-		flag = true;
-		socket.close();
-		streamOut.close();
-		streamIn.close();
-	}
-
-
-	public void run() {
-		while (!flag) {
-			try {
-				recvM = streamIn.readUTF();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public String getRecvM(){
-		return recvM;
-	}
-}
 public class FruitDetectThread extends Thread {
     SocketWrap socket;
     private String status;
 
     FruitDetectThread() {
-        socket = new SocketWrap();
+    	try {
+    		socket = new SocketWrap();
+    	} catch (Exception e) {
+    		System.out.println("Socket error!");
+    	}
         socket.start();
 
         status = "";
     }
 
 	public void Stop() {
-        socket.Stop();
+		try {
+			socket.Stop();
+		} catch (Exception e) {
+			System.out.println("Socket stop error!");
+		}
     }
 
 	public void run() {
     }
 
     public int getStatus() {
-        return status;
+    	// TODO: status: str -> int
+        return 0;
     }
 
     public boolean areThereFiveFruit() {
