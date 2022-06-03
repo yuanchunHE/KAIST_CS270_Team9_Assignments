@@ -8,12 +8,12 @@ import lejos.robotics.SampleProvider;
 public class TouchDetectThread extends Thread {
 	private EV3TouchSensor touchSensor;
 	private boolean flag;
-	private boolean touchValue;
+	private int touchValue;
 
 	TouchDetectThread() {
 		flag = false;
 		touchSensor = new EV3TouchSensor(SensorPort.S1);
-		touchValue = false;
+		touchValue = 0;
 	}
 
 	public void Stop() {
@@ -21,7 +21,7 @@ public class TouchDetectThread extends Thread {
 	}
 
 	public void run() {
-		final SampleProvider sp = touch.getTouchMode();
+		final SampleProvider sp = touchSensor.getTouchMode();
 		while (!flag) {
 			float[] sample = new float[sp.sampleSize()];
 			sp.fetchSample(sample, 0);
@@ -36,6 +36,6 @@ public class TouchDetectThread extends Thread {
 	}
 
 	public boolean isTouched() {
-		return touchValue;
+		return touchValue == 1;
 	}
 }
