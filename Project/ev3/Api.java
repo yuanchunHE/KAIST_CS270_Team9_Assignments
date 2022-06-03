@@ -1,4 +1,4 @@
-package pack;
+package test_motor;
 
 import lejos.hardware.motor.Motor;
 import lejos.robotics.RegulatedMotor;
@@ -18,14 +18,19 @@ public class Api {
         // i.e., false means human rang the bell first
         RegulatedMotor motor = Motor.D;
 	    motor.setSpeed((int) motor.getMaxSpeed());
+	    motor.rotate(-70);
         
+	    boolean success = false;
         long startTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - startTime < 300) {
             if (touchDetectThread.isTouched()) {
-                return true;
+                success = true;
+                break;
             }
         }
-        return false;        
+        
+        motor.rotate(-360 * 12 + 70);
+        return success;        
     }
 
     public void flipOneCard() {
