@@ -1,4 +1,4 @@
-package pack;
+package test_motor;
 
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3TouchSensor;
