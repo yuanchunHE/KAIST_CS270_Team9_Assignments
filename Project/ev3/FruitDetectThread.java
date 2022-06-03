@@ -1,60 +1,60 @@
-package pack;
+package test_motor;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.rmi.NotBoundException;
+import lejos.hardware.motor.Motor;
+import lejos.robotics.RegulatedMotor;
+import lejos.utility.Delay;
 
-import lejos.hardware.BrickFinder;
-import lejos.hardware.Keys;
-import lejos.hardware.ev3.EV3;
-import lejos.hardware.lcd.TextLCD;
+public class Api {
+    private TouchDetectThread touchDetectThread;
 
-
-public class FruitDetectThread extends Thread {
-    SocketWrap socket;
-    private String status;
-
-    FruitDetectThread() {
-    	try {
-    		socket = new SocketWrap();
-    	} catch (Exception e) {
-    		System.out.println("Socket error!");
-    	}
-        socket.start();
-
-        status = "";
+    public Api() {
+        touchDetectThread = new TouchDetectThread();
+        touchDetectThread.start();
     }
 
-	public void Stop() {
-		try {
-			socket.Stop();
-		} catch (Exception e) {
-			System.out.println("Socket stop error!");
-		}
+    public boolean ringTheBell() {
+        // ring the bell
+        // return true if robot succeeded to ring the bell, false otherwise
+        // i.e., false means human rang the bell first
+        RegulatedMotor motor = Motor.D;
+	    motor.setSpeed((int) motor.getMaxSpeed());
+	    motor.rotate(-70);
+        
+	    boolean success = false;
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - startTime < 300) {
+            if (touchDetectThread.isTouched()) {
+                success = true;
+                break;
+            }
+        }
+        
+        motor.rotate(-360 * 12 + 70);
+        return success;        
     }
 
-	public void run() {
+    public void flipOneCard() {
+        // flip one card
+
+        // step1: distribute one card
+        RegulatedMotor motorA = Motor.A;
+        motorA.setSpeed((int) motorA.getMaxSpeed() / 2);
+        motorA.rotate(-190 * 2);
+        motorA.flt();
+        Delay.msDelay(100);
+        motorA.rotate(90);
+
+        // step2: flip one card
+        RegulatedMotor motorB = Motor.B;
+        motorB.setSpeed((int) motorB.getMaxSpeed() / 2);
+        motorB.rotate(-135);
+        motorB.flt();
+        Delay.msDelay(100);
+        motorB.rotate(135);
+        motorB.flt();
     }
 
-    public int getStatus() {
-    	// TODO: status: str -> int
-        return 0;
-    }
-
-    public boolean areThereFiveFruit() {
-        if (status == "") return false;
-
-        return Character.compare(status.charAt(0), '5') == 0 ||
-            Character.compare(status.charAt(1), '5') == 0 ||
-            Character.compare(status.charAt(2), '5') == 0 ||
-            Character.compare(status.charAt(3), '5') == 0;
+    public void stopAllThread() {
+        touchDetectThread.Stop();
     }
 }

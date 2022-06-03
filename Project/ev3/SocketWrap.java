@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 
 public class SocketWrap extends Thread {
 	private String serverAddress = "10.0.1.12";
-	private int serverPort = 8042;
+	private int serverPort = 8043;
 	private boolean flag;
 	
 	private Socket socket = null;
@@ -17,7 +17,7 @@ public class SocketWrap extends Thread {
 	private DataInputStream streamIn = null;
 	
 	private String sendM = "";
-	private String recvM = "";
+	private String recvM = "0000";
 
     SocketWrap() throws UnknownHostException, IOException {
         flag = false;
@@ -36,7 +36,7 @@ public class SocketWrap extends Thread {
 
 	public void run() {
 		while (!flag) {
-			sendM = "ask"
+			sendM = "ask";
 			try {
 				// send msg
 				streamOut.writeUTF(sendM);
