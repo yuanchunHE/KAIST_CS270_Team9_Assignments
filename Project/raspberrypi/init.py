@@ -10,7 +10,9 @@ def run():
     while True:
         img = camera.capture()
         result = detector.detect(img)
-        socket.send(result)
+        if socket.receive():
+            socket.send(result)
+        
 
 
 if __name__ == "__main__":

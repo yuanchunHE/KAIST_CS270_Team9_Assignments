@@ -20,13 +20,18 @@ class SocketWrap:
         msg format = [0-5][0-5][0-5][0-5]
         = <# of strawberry><# of banana><# of lime><# of plum>
         '''
-        recvSize = 1024
-        #recvM = self.client.recv(recvSize)
+
         sendData = '\x00\x04' + msg
         client.send(sendData.encode('utf-8'))
 
     def receive(self):
         # receive message using socket communication
+        size = 1024
+        recvM = client.recv(size)
+        if recvM:
+            return 1
+        else:
+            return 0
         return 0
     
     def close():

@@ -16,6 +16,7 @@ public class SocketWrap extends Thread {
 	private DataOutputStream streamOut = null;
 	private DataInputStream streamIn = null;
 	
+	private String sendM = "";
 	private String recvM = "";
 
     SocketWrap() throws UnknownHostException, IOException {
@@ -35,8 +36,15 @@ public class SocketWrap extends Thread {
 
 	public void run() {
 		while (!flag) {
+			sendM = "ask"
 			try {
+				// send msg
+				streamOut.writeUTF(sendM);
+				streamOut.flush();
+				
+				// receive msg
 				recvM = streamIn.readUTF();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
