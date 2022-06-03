@@ -2,6 +2,7 @@ package pack;
 
 import lejos.hardware.motor.Motor;
 import lejos.robotics.RegulatedMotor;
+import lejos.utility.Delay;
 
 public class Api {
     private TouchDetectThread touchDetectThread;
