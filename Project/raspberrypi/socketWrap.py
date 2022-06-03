@@ -4,7 +4,7 @@ class SocketWrap:
     def __init__(self):
         # config setting
         serverAddress = "10.0.1.12"
-        port = 8042
+        port = 8043
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.bind((serverAddress, port))
@@ -22,12 +22,12 @@ class SocketWrap:
         '''
 
         sendData = '\x00\x04' + msg
-        client.send(sendData.encode('utf-8'))
+        self.client.send(sendData.encode('utf-8'))
 
     def receive(self):
         # receive message using socket communication
         size = 1024
-        recvM = client.recv(size)
+        recvM = self.client.recv(size)
         if recvM:
             return 1
         else:

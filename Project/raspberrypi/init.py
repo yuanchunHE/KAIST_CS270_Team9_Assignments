@@ -12,8 +12,6 @@ def run():
         result = detector.detect(img)
         if socket.receive():
             socket.send(result)
-        
-
-
+            
 if __name__ == "__main__":
     run()
