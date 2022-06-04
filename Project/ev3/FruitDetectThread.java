@@ -21,6 +21,8 @@ import lejos.hardware.lcd.TextLCD;
 public class FruitDetectThread extends Thread {
     SocketWrap socket;
     private String status;
+    private int nDetectedCard;
+	private boolean flag;
 
     FruitDetectThread() {
     	try {
@@ -30,10 +32,13 @@ public class FruitDetectThread extends Thread {
     	}
         socket.start();
 
-        status = "";
+		flag = true;
+        status = "0000";
+		nDetectedCard = 0;
     }
 
 	public void Stop() {
+		flag = true;
 		try {
 			socket.Stop();
 		} catch (Exception e) {
@@ -42,24 +47,31 @@ public class FruitDetectThread extends Thread {
     }
 
 	public void run() {
+		String _status;
+		while (!flag) {
+			try {
+				recvm = socket.getRecvM();
+				_status = recvm.substring(1);
+				nDetectedCard = Integer.parseInt(recvm.substring(0, 1));
+				if (nDetectedCard == 2) status = _status;
+			} catch (Exception e) {
+				System.out.println("Socket getRecvM error!" + e);
+			}
+		}
     }
 
     public int getStatus() {
-    	status = socket.getRecvM();
     	System.out.printf("Got %s!\n", status);
-    	int result;
-    	try {
-    		result = Integer.parseInt(status);
-    	} catch (Exception e) {
-    		System.out.println("Socket getRecvM error!" + e);
-    		System.out.println("status:" + status);
-    		return -1;
-    	}
-        return result;
+    	return Integer.parseInt(status);
     }
+
+    public int getN() {
+		return nDetectedCard;
+	}
 
 	public void clearStatus() {
 		status = "0000";
+		nDetectedCard = 0;
 	}
 
     public boolean areThereFiveFruit() {

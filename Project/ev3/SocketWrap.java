@@ -17,7 +17,7 @@ public class SocketWrap extends Thread {
 	private DataInputStream streamIn = null;
 	
 	private String sendM = "";
-	private String recvM = "0000";
+	private String recvM = "00000";
 
     SocketWrap() throws UnknownHostException, IOException {
         flag = false;

@@ -177,8 +177,8 @@ while True:
     if(b_num == 10):
         s_num = 0
 
-    if nOfDetectedCard == 2:
-        result = str(s_num)+str(l_num)+str(p_num)+str(b_num)
+    if nOfDetectedCard <= 2:
+        result = str(nOfDetectedCard) + str(s_num) + str(l_num) + str(p_num) + str(b_num)
         print(result)
         if socket.receive():
             socket.send(result)
