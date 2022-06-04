@@ -6,7 +6,7 @@ import lejos.hardware.ev3.EV3;
 import lejos.utility.Delay;
 
 public class Robot {
-    private static final int maxRound = 10;
+    private static final int maxRound = 5;
 
 	public static void main(String[] args) {
         Api api = new Api();
@@ -14,7 +14,7 @@ public class Robot {
         FruitDetectThread fruitDetectThread = new FruitDetectThread();
         fruitDetectThread.start();
 
-        int round = 1;
+        int round = 1, winRobot = 0, winHuman = 0;
         boolean isRobotTurn = true;
         boolean needWait = false;
         int cacheCardStatus = 0;
@@ -25,16 +25,20 @@ public class Robot {
         while (round <= maxRound) {        	
         	if (keys.getButtons() == Keys.ID_ESCAPE) break;
         	Delay.msDelay(500); // TODO: delete this
-        	// System.out.printf("robot turn? %b\n", isRobotTurn);
-        	// System.out.printf("need wait? %b\n", needWait);
             if (fruitDetectThread.areThereFiveFruit()) {
-                // System.out.println("Ring the bell!");
                 boolean success = api.ringTheBell();
-                // System.out.printf("success? %b\n", success);
-                // check who win -> success=True means robot first
-                round += 1;
-                // winner first ?
+                if (success) {
+                    System.out.println("Round " + round + " : Robot win!!");
+                    winRobot += 1;
+                } else {
+                    System.out.println("Round " + round + " : You win!!");
+                    winHuman += 1;
+                }
 
+                System.out.println("Total score [Robot : Human] = " + winRobot + " : " + winHuman);
+                System.out.println("The robot is waiting for the next round");
+                api.waitUntilRoundEnd();
+                round += 1;
             } else if (isRobotTurn) {
                 // turn of robot
                 if (!needWait) {

@@ -23,7 +23,7 @@ public class Api {
 	    boolean success = false;
         long startTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - startTime < 300) {
-            if (touchDetectThread.isTouched()) {
+            if (touchDetectThread.isTouched1()) {
                 success = true;
                 break;
             }
@@ -52,6 +52,10 @@ public class Api {
         Delay.msDelay(100);
         motorB.rotate(135);
         motorB.flt();
+    }
+
+    public void waitUntilRoundEnd() {
+        while(!touchDetectThread.isTouched2());
     }
 
     public void stopAllThread() {
