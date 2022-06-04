@@ -58,6 +58,10 @@ public class FruitDetectThread extends Thread {
         return result;
     }
 
+	public void clearStatus() {
+		status = "0000";
+	}
+
     public boolean areThereFiveFruit() {
     	int temp = getStatus();
         if (status == "") return false;

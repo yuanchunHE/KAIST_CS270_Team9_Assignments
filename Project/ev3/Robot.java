@@ -34,9 +34,10 @@ public class Robot {
                     System.out.println("Round " + round + " : You win!!");
                     winHuman += 1;
                 }
-                
+
                 System.out.println("Total score [Robot : Human] = " + winRobot + " : " + winHuman);
                 System.out.println("The robot is waiting for the next round");
+                fruitDetectThread.clearStatus();
                 api.waitUntilRoundEnd();
                 round += 1;
             } else if (isRobotTurn) {
