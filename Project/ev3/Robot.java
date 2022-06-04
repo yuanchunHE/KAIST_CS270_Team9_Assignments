@@ -22,9 +22,9 @@ public class Robot {
 		EV3 ev3 = (EV3) BrickFinder.getLocal();
         Keys keys = ev3.getKeys();
         
-        while (round <= maxRound) {        	
+        while (round <= maxRound) {
         	if (keys.getButtons() == Keys.ID_ESCAPE) break;
-        	Delay.msDelay(500); // TODO: delete this
+
             if (fruitDetectThread.areThereFiveFruit()) {
                 boolean success = api.ringTheBell();
                 if (success) {
@@ -34,7 +34,7 @@ public class Robot {
                     System.out.println("Round " + round + " : You win!!");
                     winHuman += 1;
                 }
-
+                
                 System.out.println("Total score [Robot : Human] = " + winRobot + " : " + winHuman);
                 System.out.println("The robot is waiting for the next round");
                 api.waitUntilRoundEnd();
