@@ -1,4 +1,3 @@
-from http import client
 import socket
 
 server_address = "10.0.1.12"
