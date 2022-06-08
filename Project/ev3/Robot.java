@@ -43,6 +43,7 @@ public class Robot {
                 System.out.println("The robot is waiting for the next round");
                 api.waitUntilRoundEnd();
                 fruitDetectThread.clearStatus();
+                needWait = false;
                 round += 1;
             } else if (isRobotTurn) {
                 // turn of robot

@@ -47,7 +47,7 @@ public class FruitDetectThread extends Thread {
     }
 
 	public void run() {
-		String _status;
+		String _status, recvm;
 		while (!flag) {
 			try {
 				recvm = socket.getRecvM();

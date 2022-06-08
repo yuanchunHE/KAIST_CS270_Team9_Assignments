@@ -168,18 +168,14 @@ while True:
             else:
                 b_num += fruit_num
     
-    if(s_num == 10):
-        s_num = 0
-    if(l_num == 10):
-        s_num = 0
-    if(p_num == 10):
-        s_num = 0
-    if(b_num == 10):
-        s_num = 0
+    if(s_num == 10): s_num = 0
+    if(l_num == 10): l_num = 0
+    if(p_num == 10): p_num = 0
+    if(b_num == 10): b_num = 0
 
     if nOfDetectedCard <= 2:
         result = str(nOfDetectedCard) + str(s_num) + str(l_num) + str(p_num) + str(b_num)
-        print(result)
+        #print(result)
         if socket.receive():
             socket.send(result)
     
